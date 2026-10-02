@@ -3,21 +3,33 @@ package logic;
 import model.Board;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
 
 public class Rules {
     public static boolean canPlace(Board board, int row, int col, int value){
-//        test is empty and value 1-9
-        if (board.isEmpty(row,col) && value >= 1 && value <= 9){
-//            System.out.println("It's valid to place value = " + value + " in row = " + row + " and col = " + col);
-            return true;
-        }else{
-//            System.out.println("Not valid to place value = " + value + " in row = " + row + " and col = " + col);
-            return false;
+
+
+        if (!board.isEmpty(row, col)) return false;
+
+        if (value < 1 || value > 9) return false;
+
+        for (int i = 0; i < 9; i++) {
+            if (board.getValue(row,i) == value) return false;
         }
+        for (int i = 0; i < 9; i++) {
+            if (board.getValue(i,col) == value) return false;
+        }
+
+        int boxRow = (row - (row % 3));
+        int boxCol = (col - (col % 3));
+        for (int i = boxRow; i < boxRow + 3; i++) {
+            for (int j = boxCol; j < boxCol + 3; j++) {
+                if (board.getValue(i,j) == value) return false;
+            }
+        }
+        return true;
     }
+
     public static boolean isNumbersInRowsValid(Board generatedBoard){
 
         ArrayList<Integer> used = new ArrayList<>();
