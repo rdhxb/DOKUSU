@@ -9,6 +9,9 @@ public class Board {
     public int[][] getBoard() {
         return board;
     }
+    public int getValue(int row, int col){
+        return board[row][col];
+    }
 
     public void setBoard(int row, int col , int value) {
         board[row][col] = value;
