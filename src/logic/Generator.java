@@ -3,14 +3,12 @@ package logic;
 import model.Board;
 
 import javax.swing.*;
-import java.net.Inet4Address;
 import java.util.*;
 
 public class Generator {
     public static Board generateBoard() {
 
         Board board = new Board();
-
 
         ArrayList<Set<Integer>> position = new ArrayList<>();
 
@@ -37,13 +35,10 @@ public class Generator {
                     position.get(pos).clear();
                     pos--;
                     board.setBoard(pos / 9,pos % 9 ,0);
-
                 }
             }
 
-            }
-
-        System.out.println(Arrays.deepToString(board.getBoard()));
+        }
         return board;
     }
 

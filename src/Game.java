@@ -11,6 +11,8 @@ public class Game {
         Board generatedBoard = Generator.generateBoard();
         System.out.println(Arrays.deepToString(generatedBoard.getBoard()));
 
+        BoardPrinter.printGrid(generatedBoard);
+
 
 
 
