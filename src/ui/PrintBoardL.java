@@ -1,20 +1,18 @@
 package ui;
 
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import model.Board;
 
 import java.io.IOException;
 
 public class PrintBoardL {
-    public void print(Board board) throws IOException {
+    // selRow/selCol - pole pod kursorem, editing - czy wpisujemy liczbe, pending - wpisana a niezatwierdzona liczba (0 = brak)
+    public void print(Board board, Screen screen, int selRow, int selCol, boolean editing, int pending) throws IOException {
 
-        Screen screen = new TerminalScreen(new DefaultTerminalFactory().createTerminal());
-        screen.startScreen();
-        screen.setCursorPosition(null);
+        screen.clear();
 
         TextGraphics tg = screen.newTextGraphics();
         String separator = "+-------".repeat(3) + "+";
@@ -39,7 +37,21 @@ public class PrintBoardL {
                     col += 2;
                 }
 
-                tg.putString(col, row, board.getValue(j, i) + " ");
+                int value = board.getValue(j, i);
+                if (j == selRow && i == selCol) {
+                    if (editing) {
+                        tg.setBackgroundColor(TextColor.ANSI.YELLOW);
+                        value = pending;
+                    } else {
+                        tg.setBackgroundColor(TextColor.ANSI.WHITE);
+                    }
+                    tg.setForegroundColor(TextColor.ANSI.BLACK);
+                }
+
+                tg.putString(col, row, String.valueOf(value));
+                tg.setForegroundColor(TextColor.ANSI.DEFAULT);
+                tg.setBackgroundColor(TextColor.ANSI.DEFAULT);
+                tg.putString(col + 1, row, " ");
                 col += 2;
             }
 
@@ -49,8 +61,5 @@ public class PrintBoardL {
 
         tg.putString(startCol, row, separator);
         screen.refresh();
-
-        screen.readInput();
-        screen.stopScreen();
     }
 }
