@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Arrays;
 
 public class Board {
      private int[][] board = new int[9][9];

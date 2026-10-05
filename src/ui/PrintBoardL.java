@@ -9,7 +9,6 @@ import model.Board;
 import java.io.IOException;
 
 public class PrintBoardL {
-    // selRow/selCol - pole pod kursorem, editing - czy wpisujemy liczbe, pending - wpisana a niezatwierdzona liczba (0 = brak)
     public void print(Board board, Screen screen, int selRow, int selCol, boolean editing, int pending) throws IOException {
 
         screen.clear();
